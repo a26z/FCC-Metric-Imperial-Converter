@@ -50,11 +50,53 @@ function ConvertHandler() {
                 unit: 'mi',
                 factor: 1 / 1.60934
             }
+        },
+        GAL: {
+            name: 'gallons',
+            target: {
+                unit: 'L',
+                factor: 3.78541
+            }
+        },
+        LBS: {
+            name: 'pounds',
+            target: {
+                unit: 'KG',
+                factor: 0.453592
+            }
+        },
+        MI: {
+            name: 'miles',
+            target: {
+                unit: 'KM',
+                factor: 1.60934
+            }
+        },
+        L: {
+            name: 'liters',
+            target: {
+                unit: 'GAL',
+                factor: 1 / 3.78541
+            }
+        },
+        KG: {
+            name: 'kilograms',
+            target: {
+                unit: 'LBS',
+                factor: 1 / 0.453592
+            }
+        },
+        KM: {
+            name: 'kilometers',
+            target: {
+                unit: 'MI',
+                factor: 1 / 1.60934
+            }
         }
     };
 
     let reNrOk = /((^\d+(\.\d+)?)$)|((^\d+(\.\d+)\/\d+)$)|((^\d+\/\d+)$)/;
-    let testSplit = /[a-z]+/
+    let testSplit = /[a-zA-Z]+/
 
     this.getNum = function(input) {
         let num = input.toLowerCase().split(testSplit);
