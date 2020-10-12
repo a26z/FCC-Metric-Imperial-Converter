@@ -8,7 +8,7 @@
 
 function ConvertHandler() {
 
-    this.units = {
+    const units = {
         gal: {
             name: 'gallons',
             target: {
@@ -53,11 +53,11 @@ function ConvertHandler() {
         }
     };
 
-    let reNrOk = /((^\d+(\.\d+)?)$)|((^\d+(\.\d+)\/\d+)$)|((^\d+\/\d+)$)/;
-    let testSplit = /[a-zA-Z]+/
+    const reNrOk = /((^\d+(\.\d+)?)$)|((^\d+(\.\d+)\/\d+)$)|((^\d+\/\d+)$)/;
+    const reCharOk = /[a-zA-Z]+/
 
     this.getNum = function(input) {
-        let num = input.split(testSplit);
+        let num = input.split(reCharOk);
         if (num.length == 2 && Number(num[0][0])) {
             num = num[0];
             if (num.match(reNrOk)) {
@@ -73,35 +73,26 @@ function ConvertHandler() {
         }
     }
 
-    // this.getUnit = function(input){
-    //     let inputUnit = input.toLowerCase().match(testSplit);
-    //     if(inputUnit){
-    //         return Object.keys(this.units).includes(inputUnit[0]) ? inputUnit[0] : null;
-    //     } else {
-    //         return null;
-    //     }
-    // };
-
     this.getUnit = function(input){
-        let inputUnit = input.match(testSplit);
+        let inputUnit = input.match(reCharOk);
         if(inputUnit){
-            console.log("inputUnit(88) ", inputUnit[0])
-            return Object.keys(this.units).includes(inputUnit[0].toLowerCase()) ? inputUnit[0] : null;
+            return Object.keys(units).includes(inputUnit[0].toLowerCase()) ? inputUnit[0] : null;
         } else {
             return null;
         }
     };
 
     this.getReturnUnit = function(initUnit) {
-        return this.units[initUnit.toLowerCase()].target.unit;
+        return units[initUnit.toLowerCase()].target.unit;
     }
 
     this.spellOutUnit = function(unit) {
-        return this.units[unit.toLowerCase()].name;
+        return units[unit.toLowerCase()].name;
     };
 
     this.convert = function(initNum, initUnit) {
-        return initNum * this.units[initUnit.toLowerCase()].target.factor;
+        let result = initNum * units[initUnit.toLowerCase()].target.factor;
+        return Number(result.toFixed(5));
     };
 
     this.getString = function(initNum, initUnit, returnNum, returnUnit) {
