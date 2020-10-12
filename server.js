@@ -37,7 +37,7 @@ app.use(function (req, res, next) {
   res.status(404).type("text").send("Not Found");
 });
 
-process.env.NODE_ENV='test';
+// process.env.NODE_ENV='test';
 
 //Start our server and tests!
 app.listen(process.env.PORT || 3000, function () {
