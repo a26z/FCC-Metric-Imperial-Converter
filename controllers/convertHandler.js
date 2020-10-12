@@ -8,7 +8,7 @@
 
 function ConvertHandler() {
 
-    const units = {
+    this.units = {
         gal: {
             name: 'gallons',
             target: {
@@ -50,48 +50,6 @@ function ConvertHandler() {
                 unit: 'mi',
                 factor: 1 / 1.60934
             }
-        },
-        GAL: {
-            name: 'gallons',
-            target: {
-                unit: 'L',
-                factor: 3.78541
-            }
-        },
-        LBS: {
-            name: 'pounds',
-            target: {
-                unit: 'KG',
-                factor: 0.453592
-            }
-        },
-        MI: {
-            name: 'miles',
-            target: {
-                unit: 'KM',
-                factor: 1.60934
-            }
-        },
-        L: {
-            name: 'liters',
-            target: {
-                unit: 'GAL',
-                factor: 1 / 3.78541
-            }
-        },
-        KG: {
-            name: 'kilograms',
-            target: {
-                unit: 'LBS',
-                factor: 1 / 0.453592
-            }
-        },
-        KM: {
-            name: 'kilometers',
-            target: {
-                unit: 'MI',
-                factor: 1 / 1.60934
-            }
         }
     };
 
@@ -99,7 +57,7 @@ function ConvertHandler() {
     let testSplit = /[a-zA-Z]+/
 
     this.getNum = function(input) {
-        let num = input.toLowerCase().split(testSplit);
+        let num = input.split(testSplit);
         if (num.length == 2 && Number(num[0][0])) {
             num = num[0];
             if (num.match(reNrOk)) {
@@ -115,25 +73,35 @@ function ConvertHandler() {
         }
     }
 
+    // this.getUnit = function(input){
+    //     let inputUnit = input.toLowerCase().match(testSplit);
+    //     if(inputUnit){
+    //         return Object.keys(this.units).includes(inputUnit[0]) ? inputUnit[0] : null;
+    //     } else {
+    //         return null;
+    //     }
+    // };
+
     this.getUnit = function(input){
-        let inputUnit = input.toLowerCase().match(testSplit);
+        let inputUnit = input.match(testSplit);
         if(inputUnit){
-            return Object.keys(units).includes(inputUnit[0]) ? inputUnit[0] : null;
+            console.log("inputUnit(88) ", inputUnit[0])
+            return Object.keys(this.units).includes(inputUnit[0].toLowerCase()) ? inputUnit[0] : null;
         } else {
             return null;
         }
     };
 
     this.getReturnUnit = function(initUnit) {
-        return units[initUnit].target.unit;
+        return this.units[initUnit.toLowerCase()].target.unit;
     }
 
     this.spellOutUnit = function(unit) {
-        return units[unit].name;
+        return this.units[unit.toLowerCase()].name;
     };
 
     this.convert = function(initNum, initUnit) {
-        return initNum * units[initUnit].target.factor;
+        return initNum * this.units[initUnit.toLowerCase()].target.factor;
     };
 
     this.getString = function(initNum, initUnit, returnNum, returnUnit) {
